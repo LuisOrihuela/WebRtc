@@ -1,4 +1,4 @@
-navigator.webkitGetUserMedia(
+navigator.mediaDevices.getUserMedia(
   {
     video: true,
     audio: false
@@ -14,6 +14,7 @@ navigator.webkitGetUserMedia(
     //Listen for an event, signal from the peer
     //data: what the peer is capable of...
     peer.on("signal", data => {
+      console.log("Signal received");
       document.getElementById("yourId").value = JSON.stringify(data);
     });
 
@@ -30,13 +31,13 @@ navigator.webkitGetUserMedia(
     peer.on("data", data => {
       document.getElementById("messages").textContent += data + "\n";
     });
-    peer.on('stream', stream => {
-      let video = document.createElement('video')
-      document.body.appendChild(video)
+    peer.on("stream", stream => {
+      let video = document.createElement("video");
+      document.body.appendChild(video);
 
-      video.src = window.URL.createObjectURL(stream)
+      video.src = window.URL.createObjectURL(stream);
       video.play();
-    })
+    });
   },
   err => {
     console.log(err);
